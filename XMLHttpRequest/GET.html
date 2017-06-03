@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GET Demo</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <script>
+
+    function Handler(strategy, response) {
+        this.strategy = strategy;
+        this.response = response;
+        console.log("The response handler is " + strategy.name);
+    }
+
+    Handler.prototype = {
+        handleResponse: function() {
+            return this.strategy(this.response);
+        }
+    };
+
+
+    try {
+        //new instance 
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "https://gank.io/api/random/data/福利/20");
+        
+
+        //async, onload is a monitor 
+        xhr.onload = function() {
+
+            //response in content type
+            var type = xhr.getResponseHeader("Content-Type");
+            // constructor for strategy,response
+            var handler;
+
+            //simple expression for judde media type
+            if (type.match(/^application\/json/)) {
+                handler = new Handler(jsonHandler, JSON.parse(xhr.responseText));
+            } else if (type.match(/^application\/xml/)) {
+                handler = new Handler(textHandler, xhr.responseXML);
+            } else {
+                handler = new Handler(textHandler, xhr.responseText);
+            }
+
+            handler.handleResponse();
+            if(200 <= xhr.status && xhr.status <= 299) 
+                console.log("error");
+        };
+
+        xhr.send(null);
+
+    } catch (e) {
+        console.error(e);
+    }
+
+    // json res
+    function jsonHandler(response) {
+        //let make the variable used only in the function
+        let data = response.results;
+        // buffer doc fragment 
+        let docFrag = document.createDocumentFragment();
+        for (var i = 0, l = data.length; i < l; i++) {
+            var url = data[i].url;
+            var img = document.createElement("img");
+            img.src = url;
+            img.width = 300;
+            // img added to doc Frag, docFrag is a container 
+            docFrag.appendChild(img);
+        }
+        //docFrag was added to HTML body
+        document.body.appendChild(docFrag);
+    }
+
+    // text res
+    function textHandler(response) {
+        // text res to HTML
+        document.body.innerHTML = response;
+    }
+
+    </script>
+</body>
+
+</html>
