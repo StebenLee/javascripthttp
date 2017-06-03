@@ -37,7 +37,7 @@
             // constructor for strategy,response
             var handler;
 
-            //simple expression for judde media type
+            //simple expression for judding media type
             if (type.match(/^application\/json/)) {
                 handler = new Handler(jsonHandler, JSON.parse(xhr.responseText));
             } else if (type.match(/^application\/xml/)) {
