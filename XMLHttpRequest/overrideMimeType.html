@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>OverrideMimeType Demo</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <script>
+    try {
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "logo.jpg");
+
+        // override res content type
+        xhr.overrideMimeType('text/plain; charset=x-user-defined');
+
+        //async
+        xhr.onload = function() {
+
+            let response = xhr.responseText;
+            let img = document.createElement("img");
+            let data = "";
+            for (var i = 0; i < response.length; i++) {
+                let u = response.charCodeAt(i) & 0xff;
+
+                data += String.fromCharCode(u);
+            }
+            //use base64 encode Data URI
+            img.src = "data:image/jpeg;base64," + window.btoa(data);
+
+            document.body.appendChild(img);
+        };
+
+        xhr.send(null);
+
+    } catch (e) {
+        console.error(e);
+    }
+    </script>
+</body>
+
+</html>

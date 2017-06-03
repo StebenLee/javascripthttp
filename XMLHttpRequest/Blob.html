@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blob Demo</title>
+    <meta charset="utf-8">
+</head>
+<body>
+<script>
+	try {
+        var xhr = new XMLHttpRequest();
+        
+        xhr.open("GET", "logo.jpg");
+		xhr.responseType = 'blob';
+		//async
+		xhr.onload = function () {
+			let blob = xhr.response;
+			let img = document.createElement("img");
+			let link = document.createElement("a");
+
+			//download prompt
+			link.innerHTML = "Download";
+			link.download = "logo.jpg";
+            var blobUri = window.URL.createObjectURL(blob);
+
+			img.src = blobUri;
+			link.href = blobUri;
+
+			// add img and a to page
+			document.body.appendChild(img);
+			document.body.appendChild(link);
+		};
+
+		xhr.send(null);
+
+	} catch (e) {
+		console.log(e);
+	}
+</script>
+</body>
+</html>
