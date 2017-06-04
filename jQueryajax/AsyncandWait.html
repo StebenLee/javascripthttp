@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Async/Await Demo</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <script>
+    //async/await is a syntactic sugar of Promise manipulation
+    console.log("test start");
+    balabala();
+    console.log("Is't over?");
+    
+    async function balabala() {
+    	console.log("Can you hear me?");
+    	let test = await canyouhearme(true);
+    	console.log("Result: " + test);
+    	console.log("------------------------\n");
+
+    	console.log("How about now?");
+    	test = await canyouhearme(false);
+    	console.log("Result: " + test);
+
+    }
+    function canyouhearme(flag) {
+    	return new Promise(function (resolve, reject) {
+
+    		var value = "Yes, I can.";
+    		var reason = "Can you speak louldy?";
+
+    		if(flag) {
+    			resolve(value);
+    		} else {
+    			reject(reason);
+    		}
+    	})
+    }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Get Demo</title>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<script>
+	//implement Promise of jqXHR 
+	$.get("https://gank.io/api/random/data/福利/20").done(res => jsonHandler(res));
+
+	function jsonHandler(response) {
+		let data = response.results;
+
+		let docFrag = document.createDocumentFragment();
+		for (var i = 0, l = data.length; i < l; i++) {
+			var url = data[i].url;
+			var img = document.createElement("img");
+			img.src = url;
+			img.width = 300;
+			docFrag.appendChild(img);
+		}
+		document.body.appendChild(docFrag);
+	}
+</script>
+</body>
+</html>
