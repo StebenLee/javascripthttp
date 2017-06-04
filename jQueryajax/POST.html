@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Get Demo</title>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <script>
+    //not working
+    // POST function, it's only example
+    $.post("demotest.asp", {
+            name: "1",
+            city: "T"
+        })
+        .done(function(data) {
+            console.log("success");
+            document.body.innerHTML = data;
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            console.error(errorThrown);
+        })
+        .always(function() {
+            console.log("finished");
+        });
+
+    //async function
+    async function post(url) {
+        try {
+            var data = await & .post(url, {
+                name: "1",
+                city: "T"
+            });
+
+            console.log(succes);
+            document.body.innerHTML = data;
+
+        } catch (jqXHR) {
+            console.error(jqXHR.statusText);
+        }
+        console.log("finished");
+    }
+
+    post("demotest.asp");
+    </script>
+</body>
+
+</html>
