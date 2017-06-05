@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Blob Demo</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <script>
+    	//bodyUsed is a attribute of body
+    	// when body is read by jsno(),text(),formData() and arrayBuffer(), bodyUsed will be turned true
+    	// so there is error message
+    	(async function willError() {
+    		let res = await fetch('https://gank.io/api/random/data/福利/20');
+
+    		let data = await res.json();
+    		let text = await res.text();
+
+    		console.log(data);
+    		console.log(text);
+    	}());
+
+        </script>
+</body>
+
+</html>

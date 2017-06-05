@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Clone Demo</title>
+    <script src="//cdn.polyfill.io/v2/polyfill.min.js?features=fetch"></script>
+</head>
+<body>
+<script>
+		// making a clone to reslove the bodyused attribute problem
+		(async function willError() {
+
+			let res = await fetch('https://gank.io/api/random/data/福利/20');
+
+			// making Response clone
+			let resCopy = res.clone();
+
+			let data = await res.json();
+			let text = await resCopy.json();
+			console.log(data);
+			console.log(text);
+
+			}());
+</script>
+</body>
+</html>

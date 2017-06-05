@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Post Demo</title>
+    <meta charset="UTF-8">
+    <script src="//cdn.polyfill.io/v2/polyfill.min.js?features=fetch"></script>
+</head>
+
+<body>
+    <script>
+    (async function post() {
+    	try {
+    		// set headers
+    		var headers = new Headers({'x-just-test': 'This is a test.'});
+    		headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    		// data
+    		var data  = {name: "勝", city: "Hualien"};
+    		// Percent-encoding for payloading
+    		var encodeData = encodeFormData(data);
+
+    		//init
+    		// method post
+    		// set headers
+    		//body encodeData
+    		var myInit = {
+    			method: 'POST',
+    			headers: headers,
+    			body: encodeData
+    		};
+    		//new request
+    		var myRequest = new Request('demo_test.asp', myInit);
+    		//async
+    		let res = await fetch(myRequest);
+    		//can't be omitted, fetch will resolved promist 4XX(client errors) or 5XX (server errors)
+    		// res.ok === (200 <= res.status && res.status <= 299)
+    		if(res.ok) {
+    			alert(await res.text());
+
+    		} else {
+    			let text = await res.text();
+    			console.log(text);
+    		}
+    	} catch(e) {
+    		console.log(e);
+    	}
+    }());
+
+
+    function encodeFormData(data) {
+        if (!data) return ""; // Always return a string
+        var pairs = []; // To hold name=value pairs
+        for (var name in data) { // For each name
+            if (!data.hasOwnProperty(name)) continue; // Skip inherited
+            if (typeof data[name] === "function") continue; // Skip methods
+            var value = data[name].toString(); // Value as string
+            name = encodeURIComponent(name.replace(" ", "+")); // Encode name
+            value = encodeURIComponent(value.replace(" ", "+")); // Encode value
+            pairs.push(name + "=" + value); // Remember name=value pair
+        }
+        return pairs.join('&'); // Return joined pairs separated with &
+    }
+    </script>
+</body>
+
+</html>
